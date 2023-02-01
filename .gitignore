@@ -1,5 +1,5 @@
 .idea/
 __pycache__/
-media/
+
 tips.md
 db.sqlite3
