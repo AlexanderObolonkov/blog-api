@@ -1,12 +1,14 @@
 import os
+
+from django.core.mail import send_mail
 from rest_framework import viewsets, permissions, pagination, generics, filters
-from taggit.models import Tag
-from .serializers import (PostSerializer, TagSerializer, ContactSerailizer,
-                          RegisterSerializer, UserSerializer, CommentSerializer)
-from .models import Post, Comment
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.core.mail import send_mail
+from taggit.models import Tag
+
+from .models import Post, Comment
+from .serializers import (PostSerializer, TagSerializer, ContactSerailizer,
+                          RegisterSerializer, UserSerializer, CommentSerializer)
 
 
 class PageNumberSetPagination(pagination.PageNumberPagination):
