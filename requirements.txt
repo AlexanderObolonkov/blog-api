@@ -9,6 +9,7 @@ djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 Pillow==9.4.0
 PyJWT==2.6.0
+python-dotenv==0.21.1
 pytz==2022.7
 six==1.16.0
 sqlparse==0.4.3
