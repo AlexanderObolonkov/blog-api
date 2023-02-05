@@ -3,3 +3,4 @@ __pycache__/
 venv/
 tips.md
 db.sqlite3
+.env
