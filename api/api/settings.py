@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ниже настройки JWT токена
+# JWT token settings
 LOGIN_URL = "/api/v1/signin"
 
 SIMPLE_JWT = {
@@ -73,10 +73,10 @@ SIMPLE_JWT = {
 }
 
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://127.0.0.1:3000"]
-# конец настроек JWT токена
+# end of JWT token settings
 
 
-#настройки rest framework
+# rest framework settings
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": ["rest_framework_simplejwt.authentication.JWTAuthentication"],
