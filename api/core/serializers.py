@@ -3,31 +3,40 @@ from rest_framework import serializers
 from taggit.models import Tag
 from taggit_serializer.serializers import TaggitSerializer
 
-from .models import Post, Comment
+from .models import Comment, Post
 
 
 class TagSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ('name', 'slug')
-        lookup_field = 'name'
-        extra_kwargs = {
-            'url': {'lookup_field': 'name'}
-        }
+        fields = ("name", "slug")
+        lookup_field = "name"
+        extra_kwargs = {"url": {"lookup_field": "name"}}
 
 
 class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     tags = TagSerializer(many=True, read_only=True)
-    author = serializers.SlugRelatedField(slug_field='username', queryset=User.objects.all())
+    author = serializers.SlugRelatedField(
+        slug_field="username", queryset=User.objects.all()
+    )
 
     class Meta:
         model = Post
-        fields = ('id', 'h1', 'title', 'slug', 'description', 'content', 'image', 'created_at', 'author', 'tags')
-        lookup_field = 'slug'
-        extra_kwargs = {
-            'url': {'lookup_field': 'slug'}
-        }
+        fields = (
+            "id",
+            "h1",
+            "title",
+            "slug",
+            "description",
+            "content",
+            "image",
+            "created_at",
+            "author",
+            "tags",
+        )
+        lookup_field = "slug"
+        extra_kwargs = {"url": {"lookup_field": "slug"}}
 
 
 class ContactSerailizer(serializers.Serializer):
@@ -64,18 +73,18 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = '__all__'
+        fields = "__all__"
 
 
 class CommentSerializer(serializers.ModelSerializer):
 
-    username = serializers.SlugRelatedField(slug_field="username", queryset=User.objects.all())
+    username = serializers.SlugRelatedField(
+        slug_field="username", queryset=User.objects.all()
+    )
     post = serializers.SlugRelatedField(slug_field="slug", queryset=Post.objects.all())
 
     class Meta:
         model = Comment
         fields = ("id", "post", "username", "text", "created_date")
-        lookup_field = 'id'
-        extra_kwargs = {
-            'url': {'lookup_field': 'id'}
-        }
+        lookup_field = "id"
+        extra_kwargs = {"url": {"lookup_field": "id"}}
