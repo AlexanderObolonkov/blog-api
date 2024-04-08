@@ -9,7 +9,7 @@ from taggit.models import Tag
 from .models import Comment, Post
 from .serializers import (
     CommentSerializer,
-    ContactSerailizer,
+    ContactSerializer,
     PostSerializer,
     RegisterSerializer,
     TagSerializer,
@@ -58,10 +58,10 @@ class AsideView(generics.ListAPIView):
 
 class FeedBackView(APIView):
     permission_classes = [permissions.AllowAny]
-    serializer_class = ContactSerailizer
+    serializer_class = ContactSerializer
 
     def post(self, request, *args, **kwargs) -> Response:
-        serializer_class = ContactSerailizer(data=request.data)
+        serializer_class = ContactSerializer(data=request.data)
         if serializer_class.is_valid():
             data = serializer_class.validated_data
             name = data.get("name")

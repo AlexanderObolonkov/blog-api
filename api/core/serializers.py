@@ -7,7 +7,6 @@ from .models import Comment, Post
 
 
 class TagSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Tag
         fields = ("name", "slug")
@@ -39,7 +38,7 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
         extra_kwargs = {"url": {"lookup_field": "slug"}}
 
 
-class ContactSerailizer(serializers.Serializer):
+class ContactSerializer(serializers.Serializer):
     name = serializers.CharField()
     email = serializers.CharField()
     subject = serializers.CharField()
@@ -77,7 +76,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-
     username = serializers.SlugRelatedField(
         slug_field="username", queryset=User.objects.all()
     )
