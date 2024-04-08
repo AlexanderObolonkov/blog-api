@@ -1,5 +1,4 @@
-import os
-
+from django.conf import settings
 from django.core.mail import send_mail
 from rest_framework import filters, generics, pagination, permissions, viewsets
 from rest_framework.response import Response
@@ -69,10 +68,11 @@ class FeedBackView(APIView):
             subject = data.get("subject")
             message = data.get("message")
             send_mail(
-                f"От {name} | {subject} | email: {from_email}",
-                message,
-                from_email,
-                [os.getenv("MAIN_EMAIL")],
+                subject=f"От {name} | {subject} | email: {from_email}",
+                message=message,
+                from_email=settings.EMAIL_HOST_USER,
+                recipient_list=[settings.EMAIL_HOST_USER],
+                fail_silently=False,
             )
             return Response({"success": "Sent"})
 
