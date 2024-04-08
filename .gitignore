@@ -4,3 +4,4 @@ venv/
 tips.md
 db.sqlite3
 .env
+api/static

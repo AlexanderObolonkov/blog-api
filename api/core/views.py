@@ -27,7 +27,7 @@ class PostViewSet(viewsets.ModelViewSet):
     search_fields = ["$content", "$h1"]
     filter_backends = (filters.SearchFilter,)
     serializer_class = PostSerializer
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by("-created_at")
     lookup_field = "slug"
     permission_classes = [permissions.AllowAny]
     pagination_class = PageNumberSetPagination
@@ -51,7 +51,7 @@ class TagView(generics.ListAPIView):
 
 
 class AsideView(generics.ListAPIView):
-    queryset = Post.objects.all().order_by("-id")[:5]
+    queryset = Post.objects.all().order_by("-created_at")[:5]
     serializer_class = PostSerializer
     permission_classes = [permissions.AllowAny]
 
