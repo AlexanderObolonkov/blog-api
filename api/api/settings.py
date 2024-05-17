@@ -36,6 +36,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "django_non_dark_admin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -158,7 +159,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "static"
 
 # Default primary key field type
@@ -171,63 +172,21 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
-####################################
-#  CKEDITOR CONFIGURATION #
-####################################
+# CKEDITOR CONFIGURATION
 
 CKEDITOR_JQUERY_URL = "https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"
 
-# CKEDITOR_UPLOAD_PATH = 'uploads/'
+CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_IMAGE_BACKEND = "pillow"
 CKEDITOR_CONFIGS = {
     "default": {
-        "removePlugins": "stylesheetparser",
+        "extraPlugins": ["codesnippet"],
         "allowedContent": True,
-        "toolbar_Full": [
-            [
-                "Styles",
-                "Format",
-                "Bold",
-                "Italic",
-                "Underline",
-                "Strike",
-                "Subscript",
-                "Superscript",
-                "-",
-                "RemoveFormat",
-            ],
-            ["Image", "Flash", "Table", "HorizontalRule"],
-            ["TextColor", "BGColor"],
-            ["Smiley", "sourcearea", "SpecialChar"],
-            ["Link", "Unlink", "Anchor"],
-            [
-                "NumberedList",
-                "BulletedList",
-                "-",
-                "Outdent",
-                "Indent",
-                "-",
-                "Blockquote",
-                "CreateDiv",
-                "-",
-                "JustifyLeft",
-                "JustifyCenter",
-                "JustifyRight",
-                "JustifyBlock",
-                "-",
-                "BidiLtr",
-                "BidiRtl",
-                "Language",
-            ],
-            ["Source", "-", "Save", "NewPage", "Preview", "Print", "-", "Templates"],
-            ["Cut", "Copy", "Paste", "PasteText", "PasteFromWord", "-", "Undo", "Redo"],
-            ["Find", "Replace", "-", "SelectAll", "-", "Scayt"],
-            ["Maximize", "ShowBlocks"],
-        ],
+        "toolbar": "full",
     }
 }
 
-###################################
+# CKEDITOR CONFIGURATION END
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
@@ -235,3 +194,5 @@ EMAIL_PORT = os.getenv("EMAIL_PORT")
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL")
+
+DISABLE_DARK_MODE = True
