@@ -21,6 +21,7 @@ python-dotenv = "0.21.1"
 pytz = "2022.7"
 six = "1.16.0"
 sqlparse = "0.4.3"
+psycopg2 = "^2.9.9"
 
 
 [tool.poetry.group.dev.dependencies]
