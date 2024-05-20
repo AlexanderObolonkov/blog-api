@@ -36,7 +36,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    "django_non_dark_admin",
+    "channels",
+    "daphne",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -44,6 +45,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    "rest_framework.authtoken",
+    "rest_framework_simplejwt",
     "ckeditor",
     "ckeditor_uploader",
     "taggit",
@@ -72,10 +75,8 @@ SIMPLE_JWT = {
 }
 
 CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://127.0.0.1:3000"]
-# end of JWT token settings
 
-
-# rest framework settings
+# Rest framework settings
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
@@ -108,6 +109,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "api.wsgi.application"
+ASGI_APPLICATION = "api.asgi.application"
 
 
 # Database
@@ -182,11 +184,65 @@ CKEDITOR_CONFIGS = {
     "default": {
         "extraPlugins": ["codesnippet"],
         "allowedContent": True,
-        "toolbar": "full",
+        "toolbar": [
+            ["Source", "-", "Save", "NewPage", "Preview", "-", "Templates"],
+            [
+                "Cut",
+                "Copy",
+                "Paste",
+                "PasteText",
+                "PasteFromWord",
+                "-",
+                "Print",
+                "SpellChecker",
+                "Scayt",
+            ],
+            ["Undo", "Redo", "-", "Find", "Replace", "-", "SelectAll", "RemoveFormat"],
+            [
+                "Form",
+                "Checkbox",
+                "Radio",
+                "TextField",
+                "Textarea",
+                "Select",
+                "Button",
+                "ImageButton",
+                "HiddenField",
+            ],
+            "/",
+            ["Bold", "Italic", "Underline", "Strike", "-", "Subscript", "Superscript"],
+            [
+                "NumberedList",
+                "BulletedList",
+                "-",
+                "Outdent",
+                "Indent",
+                "Blockquote",
+                "CreateDiv",
+            ],
+            ["JustifyLeft", "JustifyCenter", "JustifyRight", "JustifyBlock"],
+            ["BidiLtr", "BidiRtl"],
+            ["Link", "Unlink", "Anchor"],
+            [
+                "Image",
+                "Flash",
+                "Table",
+                "HorizontalRule",
+                "Smiley",
+                "SpecialChar",
+                "PageBreak",
+                "Iframe",
+            ],
+            "/",
+            ["Styles", "Format", "Font", "FontSize"],
+            ["TextColor", "BGColor"],
+            ["Maximize", "ShowBlocks"],
+            ["CodeSnippet"],
+        ],
     }
 }
 
-# CKEDITOR CONFIGURATION END
+# Email settings
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = os.getenv("EMAIL_HOST")
@@ -195,7 +251,19 @@ EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 EMAIL_USE_SSL = os.getenv("EMAIL_USE_SSL")
 
-DISABLE_DARK_MODE = True
+# Taggit settings
 
 TAGGIT_STRIP_UNICODE_WHEN_SLUGIFYING = True
 TAGGIT_FORCE_LOWERCASE = True
+
+
+# Channels settings
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
+}

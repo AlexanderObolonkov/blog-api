@@ -23,7 +23,7 @@ class PageNumberSetPagination(pagination.PageNumberPagination):
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    search_fields = ["$content", "$h1"]
+    search_fields = ["h1"]
     filter_backends = (filters.SearchFilter,)
     serializer_class = PostSerializer
     queryset = Post.objects.all().order_by("-created_at")
