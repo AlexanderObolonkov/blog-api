@@ -9,8 +9,10 @@ from .views import (
     PostViewSet,
     ProfileView,
     RegisterView,
+    SubscribeAPIView,
     TagDetailView,
     TagView,
+    UnsubscribeAPIView,
 )
 
 router = DefaultRouter()
@@ -26,4 +28,14 @@ urlpatterns = [
     path("profile/", ProfileView.as_view()),
     path("comments/", AddCommentView.as_view()),
     path("comments/<slug:post_slug>/", GetCommentsView.as_view()),
+    path(
+        "subscribe/newsletter/<int:user_id>/",
+        SubscribeAPIView.as_view(),
+        name="subscribe-newsletter",
+    ),
+    path(
+        "unsubscribe/newsletter/<int:user_id>/",
+        UnsubscribeAPIView.as_view(),
+        name="unsubscribe-newsletter",
+    ),
 ]

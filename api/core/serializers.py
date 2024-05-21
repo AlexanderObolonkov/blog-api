@@ -1,9 +1,9 @@
-from django.contrib.auth.models import User
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 from taggit.models import Tag
-from taggit_serializer.serializers import TaggitSerializer
+from taggit_serializer.serializers import TaggitSerializer, TagListSerializerField
 
-from .models import Comment, Post
+from .models import Comment, Post, User
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -47,11 +47,15 @@ class ContactSerializer(serializers.Serializer):
 
 class RegisterSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True)
+    email = serializers.EmailField(
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
 
     class Meta:
         model = User
         fields = [
             "username",
+            "email",
             "password",
             "password2",
         ]
@@ -61,18 +65,28 @@ class RegisterSerializer(serializers.ModelSerializer):
         username = validated_data["username"]
         password = validated_data["password"]
         password2 = validated_data["password2"]
+        email = validated_data["email"]
         if password != password2:
             raise serializers.ValidationError({"password": "Пароли не совпадают"})
-        user = User(username=username)
+        user = User(username=username, email=email)
         user.set_password(password)
         user.save()
         return user
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(TaggitSerializer, serializers.ModelSerializer):
+    subscribed_tags = TagListSerializerField()
+
     class Meta:
         model = User
-        fields = "__all__"
+        fields = (
+            "id",
+            "username",
+            "email",
+            "profile_image",
+            "subscribed_to_newsletter",
+            "subscribed_tags",
+        )
 
 
 class CommentSerializer(serializers.ModelSerializer):

@@ -1,11 +1,11 @@
 from django.conf import settings
 from django.core.mail import send_mail
-from rest_framework import filters, generics, pagination, permissions, viewsets
+from rest_framework import filters, generics, pagination, permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from taggit.models import Tag
 
-from .models import Comment, Post
+from .models import Comment, Post, User
 from .serializers import (
     CommentSerializer,
     ContactSerializer,
@@ -124,3 +124,53 @@ class GetCommentsView(generics.ListAPIView):
         post_slug = self.kwargs["post_slug"].lower()
         post = Post.objects.get(slug=post_slug)
         return Comment.objects.filter(post=post)
+
+
+class SubscribeAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, user_id):
+        if user_id:
+            try:
+                user = User.objects.get(pk=user_id)
+                user.subscribed_to_newsletter = True
+                user.save()
+                return Response(
+                    {"message": "Subscribed to feed successfully"},
+                    status=status.HTTP_200_OK,
+                )
+            except User.DoesNotExist:
+                return Response(
+                    {"message": "User does not exist"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        else:
+            return Response(
+                {"message": "User ID is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+
+class UnsubscribeAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, user_id):
+        if user_id:
+            try:
+                user = User.objects.get(pk=user_id)
+                user.subscribed_to_newsletter = False
+                user.save()
+                return Response(
+                    {"message": "Unsubscribed to feed successfully"},
+                    status=status.HTTP_200_OK,
+                )
+            except User.DoesNotExist:
+                return Response(
+                    {"message": "User does not exist"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+        else:
+            return Response(
+                {"message": "User ID is required"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )

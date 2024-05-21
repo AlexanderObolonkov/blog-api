@@ -66,6 +66,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+FRONTEND_URL = os.getenv("FRONTEND_URL")
+FRONTEND_URL_SECOND = os.getenv("FRONTEND_URL_SECOND")
+
+# Users
+
+AUTH_USER_MODEL = "core.User"
+
 # JWT token settings
 LOGIN_URL = "/api/v1/signin"
 
@@ -74,7 +81,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=2),
 }
 
-CORS_ORIGIN_WHITELIST = ["http://localhost:3000", "http://127.0.0.1:3000"]
+CORS_ORIGIN_WHITELIST = [FRONTEND_URL, FRONTEND_URL_SECOND]
 
 # Rest framework settings
 
