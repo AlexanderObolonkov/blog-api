@@ -83,7 +83,6 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "profile_image",
             "subscribed_to_newsletter",
-            "subscribed_tags",
         )
 
 
