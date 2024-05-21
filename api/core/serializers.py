@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from taggit.models import Tag
-from taggit_serializer.serializers import TaggitSerializer, TagListSerializerField
+from taggit_serializer.serializers import TaggitSerializer
 
 from .models import Comment, Post, User
 
@@ -74,9 +74,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 
-class UserSerializer(TaggitSerializer, serializers.ModelSerializer):
-    subscribed_tags = TagListSerializerField()
-
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
