@@ -1,5 +1,3 @@
-from django.conf import settings
-from django.core.mail import send_mail
 from rest_framework import filters, generics, pagination, permissions, status, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -14,6 +12,7 @@ from .serializers import (
     TagSerializer,
     UserSerializer,
 )
+from .tasks import send_feedback_email
 
 
 class PageNumberSetPagination(pagination.PageNumberPagination):
@@ -67,14 +66,13 @@ class FeedBackView(APIView):
             from_email = data.get("email")
             subject = data.get("subject")
             message = data.get("message")
-            send_mail(
+            send_feedback_email.delay(
                 subject=f"От {name} | {subject} | email: {from_email}",
                 message=message,
-                from_email=settings.EMAIL_HOST_USER,
-                recipient_list=[settings.EMAIL_HOST_USER],
-                fail_silently=False,
+                from_email=from_email,
             )
-            return Response({"success": "Sent"})
+            return Response({"success": "Sent"}, status=status.HTTP_200_OK)
+        return Response(serializer_class.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class RegisterView(generics.GenericAPIView):

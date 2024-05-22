@@ -1,11 +1,11 @@
 from ckeditor_uploader.fields import RichTextUploadingField
-from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from taggit.managers import TaggableManager
 from unidecode import unidecode  # noqa: F401
+
+from .tasks import send_newsletter_email
 
 
 class User(AbstractUser):
@@ -42,31 +42,8 @@ class Post(models.Model):
     def notify_subscribers(self):
         newsletter_subscribers = User.objects.filter(subscribed_to_newsletter=True)
 
-        subject = f"Новый Пост: {self.title}"
-        from_email = settings.EMAIL_HOST_USER
-
         for user in newsletter_subscribers:
-            unsubscribe_newsletter_url = (
-                f"{settings.FRONTEND_URL}/unsubscribe/newsletter/{user.id}"
-            )
-
-            message = f"""
-            <p>Привет, {user.username}!</p>
-            <p>Новый пост "{self.title}" был опубликован.</p>
-            <p>Подробнее по ссылке: {settings.FRONTEND_URL}/posts/{self.slug}</p>
-
-            <p>Если вы хотите отписаться от уведомлений о выходе новых постой, перейдите по следующей ссылке:</p>
-            <p><a href="{unsubscribe_newsletter_url}">Отписаться от всех рассылок</a> (Ссылка: {unsubscribe_newsletter_url})</p>
-            """
-
-            send_mail(
-                subject,
-                "",
-                from_email,
-                [user.email],
-                fail_silently=False,
-                html_message=message,
-            )
+            send_newsletter_email.delay(user.id, self.title, self.slug)
 
 
 class Comment(models.Model):
