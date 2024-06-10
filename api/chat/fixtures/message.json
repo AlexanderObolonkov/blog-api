@@ -1,0 +1,83 @@
+[
+  {
+    "model": "chat.message",
+    "pk": 27,
+    "fields": {
+      "user": 1,
+      "content": "Тут было сообщение",
+      "timestamp": "2024-05-26T11:21:58.760Z"
+    }
+  },
+  {
+    "model": "chat.message",
+    "pk": 28,
+    "fields": {
+      "user": 2,
+      "content": "И ещё одно сообщение\nВсем привет",
+      "timestamp": "2024-05-26T11:22:34.684Z"
+    }
+  },
+  {
+    "model": "chat.message",
+    "pk": 29,
+    "fields": {
+      "user": 7,
+      "content": "Сообщение",
+      "timestamp": "2024-05-26T11:59:15.406Z"
+    }
+  },
+  {
+    "model": "chat.message",
+    "pk": 30,
+    "fields": {
+      "user": 7,
+      "content": "Новое",
+      "timestamp": "2024-05-26T11:59:18.249Z"
+    }
+  },
+  {
+    "model": "chat.message",
+    "pk": 31,
+    "fields": {
+      "user": 7,
+      "content": "И\nЕщё\nOne",
+      "timestamp": "2024-05-26T11:59:23.980Z"
+    }
+  },
+  {
+    "model": "chat.message",
+    "pk": 32,
+    "fields": {
+      "user": 7,
+      "content": "И ещё",
+      "timestamp": "2024-05-26T11:59:27.511Z"
+    }
+  },
+  {
+    "model": "chat.message",
+    "pk": 33,
+    "fields": {
+      "user": 2,
+      "content": "Сообщение",
+      "timestamp": "2024-05-26T11:59:34.366Z"
+    }
+  },
+  {
+    "model": "chat.message",
+    "pk": 41,
+    "fields": {
+      "user": 1,
+      "content": "Всем привет",
+      "timestamp": "2024-06-10T19:49:43.084Z"
+    }
+  },
+  {
+    "model": "chat.message",
+    "pk": 42,
+    "fields": {
+      "user": 1,
+      "content": "Как дела?",
+      "timestamp": "2024-06-10T19:49:45.430Z"
+    }
+  }
+]

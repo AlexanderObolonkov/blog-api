@@ -1,0 +1,32 @@
+[
+  {
+    "model": "core.comment",
+    "pk": 2,
+    "fields": {
+      "post": 4,
+      "username": 1,
+      "text": "Тут комментарий",
+      "created_date": "2024-05-25T18:07:44.596Z"
+    }
+  },
+  {
+    "model": "core.comment",
+    "pk": 3,
+    "fields": {
+      "post": 4,
+      "username": 6,
+      "text": "Комментарий",
+      "created_date": "2024-05-25T18:30:35.500Z"
+    }
+  },
+  {
+    "model": "core.comment",
+    "pk": 4,
+    "fields": {
+      "post": 4,
+      "username": 6,
+      "text": "Ещё один комментарий",
+      "created_date": "2024-05-25T18:31:26.061Z"
+    }
+  }
+]
